@@ -27,7 +27,7 @@ img = vis_processors["eval"](raw_image).unsqueeze(0).to(device)
 txt = text_processors["eval"](caption)
 txt_tokens = model.tokenizer(txt, return_tensors="pt").to(device)
 gradcam, _ = compute_gradcam(model, img, txt, txt_tokens, block_num=7)
-avg_gradcam = getAttMap(norm_img, gradcam[0][1], blur=True)
+avg_gradcam = getAttMap(norm_img, gradcam[0][1].cpu().numpy(), blur=True)
 fig, ax = plt.subplots(1, 1, figsize=(10, 10))
 ax.imshow(avg_gradcam)
 num_image = len(txt_tokens.input_ids[0]) - 2
@@ -38,7 +38,7 @@ token_id_iter = iter(txt_tokens.input_ids[0][1:-1])
 
 for i, (gradcam, token_id) in enumerate(zip(gradcam_iter, token_id_iter)):
     word = model.tokenizer.decode([token_id])
-    gradcam_image = getAttMap(norm_img, gradcam, blur=True)
+    gradcam_image = getAttMap(norm_img, gradcam.cpu().numpy(), blur=True)
     ax[i].imshow(gradcam_image)
     ax[i].set_yticks([])
     ax[i].set_xticks([])
