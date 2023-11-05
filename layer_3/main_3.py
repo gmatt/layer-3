@@ -5,8 +5,10 @@ from lavis.common.gradcam import getAttMap
 from lavis.models import load_model_and_preprocess
 from lavis.models.blip_models.blip_image_text_matching import compute_gradcam
 from matplotlib import pyplot as plt
+from pyprojroot import here
 
-raw_image = Image.open("../docs/_static/merlion.png").convert("RGB")
+
+raw_image = Image.open(here("data/test-images/merlion.png")).convert("RGB")
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 caption = "Merlion near marina bay."
@@ -43,3 +45,5 @@ for i, (gradcam, token_id) in enumerate(zip(gradcam_iter, token_id_iter)):
     ax[i].set_yticks([])
     ax[i].set_xticks([])
     ax[i].set_xlabel(word)
+
+fig.show()
