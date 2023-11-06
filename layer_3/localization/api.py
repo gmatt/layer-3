@@ -76,8 +76,8 @@ async def localize(
     plt.show()
 
     return ResponseModel(
-        x=coordinates[1] * scaling_factor,
-        y=w - (coordinates[0] * scaling_factor),
+        x=coordinates[1] / scaling_factor,
+        y=h - (coordinates[0] / scaling_factor),
     )
 
 
