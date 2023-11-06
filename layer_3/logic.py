@@ -32,10 +32,8 @@ def perform_action(action: str) -> None:
     logging.info("Creating screenshot")
     image: Image = pyautogui.screenshot()
     logging.info("Created screenshot")
+    # Resize image, this is useful for retina resolution.
     image = image.resize((screen_width, screen_height))
-
-    # image.save(here("data/test-images/out.png"))
-    # return
 
     prompt = PROMPT.format(action=action)
 
